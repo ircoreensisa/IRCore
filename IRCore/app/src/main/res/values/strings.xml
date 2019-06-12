@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">IRCore</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">IRCore</string>
+    <string name="nav_header_subtitle"> </string>
+    <string name="nav_header_desc">Menu</string>
+    <string name="action_settings">Réglages</string>
+
+    <string name="menu_qrcode">Scanner un QRCode</string>
+    <string name="menu_salle">Reconnaitre une salle</string>
+    <string name="menu_video">Augmenter les affiches</string>
+    <string name="menu_guidage">S\'orienter dans l\'école</string>
+    <string name="menu_toilet">Urgence Toilette</string>
+    <string name="menu_visite">Afficher les personnages</string>
+    <string name="menu_quit">Quitter</string>
+
+    //Ressources du lecteur de texte
+    <string name="txt_message">Texte</string>
+
+    <string name="title_activity_maps">Map</string>
+    <string-array name="salles_array">
+        <item>Grand amphi</item>
+        <item>Petit amphi</item>
+        <item>Kfet</item>
+        <item>Amicale</item>
+        <item>Xid</item>
+        <item>Electro 1.16</item>
+        <item>Physique 1.15</item>
+        <item>Systeme</item>
+        <item>Mbot</item>
+        <item>Accueil</item>
+        <item>PC1</item>
+        <item>PC2</item>
+        <item>PC3</item>
+        <item>PC4</item>
+        <item>PC Master</item>
+        <item>TP informatique industrielle</item>
+        <item>E20 A</item>
+        <item>E20 B</item>
+        <item>E21</item>
+        <item>E22</item>
+        <item>E23</item>
+        <item>E24</item>
+        <item>E25</item>
+        <item>Prof 1, Etage 2</item>
+        <item>Prof 2, Etage 2</item>
+        <item>E30</item>
+        <item>E31</item>
+        <item>E32</item>
+        <item>E33</item>
+        <item>E34</item>
+        <item>E35</item>
+        <item>E36</item>
+        <item>E37</item>
+        <item>Salle Réseau</item>
+        <item>Prof 1, Etage 3</item>
+        <item>Prof 2, Etage 3</item>
+    </string-array>
+</resources>
