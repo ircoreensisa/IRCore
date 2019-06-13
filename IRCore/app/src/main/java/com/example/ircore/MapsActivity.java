@@ -1,31 +1,26 @@
 package com.example.ircore;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Color;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.ircore.cloudanchor.CloudAnchorFragment;
@@ -39,26 +34,62 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Location myLocation ;
-    private int etage ;
+    private Location myLocation;
+    private int etage;
     private int etage_dest;
-    private int zone_dest ;
-    private int zone ;
+    private int zone_dest;
+    private int zone;
     private boolean climbing;
     private Salles salles;
     private Handler handler;
     private Runnable runnable;
-
+    private LocationManager locationManager ;
+    private Criteria critere ;
+    private ArrayList<LocationProvider> providers ;
+    private ArrayList<String> names ;
+    private String provider ;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        critere = new Criteria();
+
+        names = (ArrayList<String>) locationManager.getProviders(true);
+        providers = new ArrayList<LocationProvider>();
+
+        for (String name : names)
+            providers.add(locationManager.getProvider(name));
+
+        provider = locationManager.getBestProvider(critere, true);
+
+        // Pour indiquer la précision voulue
+        // On peut mettre ACCURACY_FINE pour une haute précision ou ACCURACY_COARSE pour une moins bonne précision
+        critere.setAccuracy(Criteria.ACCURACY_FINE);
+
+        // Est-ce que le fournisseur doit être capable de donner une altitude ?
+        critere.setAltitudeRequired(false);
+
+        // Est-ce que le fournisseur doit être capable de donner une direction ?
+        critere.setBearingRequired(true);
+
+        // Est-ce que le fournisseur peut être payant ?
+        critere.setCostAllowed(false);
+
+        // Pour indiquer la consommation d'énergie demandée
+        // Criteria.POWER_HIGH pour une haute consommation, Criteria.POWER_MEDIUM pour une consommation moyenne et Criteria.POWER_LOW pour une basse consommation
+        critere.setPowerRequirement(Criteria.POWER_HIGH);
+
+        // Est-ce que le fournisseur doit être capable de donner une vitesse ?
+        critere.setSpeedRequired(false);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -83,13 +114,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String salle = (String)parent.getItemAtPosition(position);
+                String salle = (String) parent.getItemAtPosition(position);
                 Iterator<Salle> i = salles.getList().iterator();
-                while(i.hasNext()) {
-                    Salle current_salle = i.next() ;
-                    if(current_salle.getName().equalsIgnoreCase(salle)) {
-                        etage_dest = current_salle.getfloor() ;
-                        zone_dest = current_salle.getzone() ;
+                while (i.hasNext()) {
+                    Salle current_salle = i.next();
+                    if (current_salle.getName().equalsIgnoreCase(salle)) {
+                        etage_dest = current_salle.getfloor();
+                        zone_dest = current_salle.getzone();
                     }
                 }
             }
@@ -104,6 +135,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         runnable = new Runnable() {
             @Override
             public void run() {
+                if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    Activity#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for Activity#requestPermissions for more details.
+                    return;
+                } else {
+                    myLocation = locationManager.getLastKnownLocation(provider);
+                    Log.i("Location","Location : "+myLocation.getLatitude()+" "+myLocation.getLongitude());
+                }
+
+                Log.d("Zones","Etage : "+etage+" Zone : "+zone);
                 if(etage == 1) {
                     if(zone==1) ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amphis");
                     if(zone==2) ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Hall");
@@ -126,6 +172,108 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     if(zone==5) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
                     if(zone==7) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
                 }
+                if(etage == 1) {
+                    if(myLocation.getLatitude() < 47.729807 && myLocation.getLatitude() > 47.729484 && myLocation.getLongitude() < 7.310883 && myLocation.getLongitude() > 7.310473) {
+                        ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amphis");
+                        zone = 1 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729604 && myLocation.getLatitude() > 47.729193 && myLocation.getLongitude() < 7.310689 && myLocation.getLongitude() > 7.310182) {
+                        ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Hall");
+                        zone = 2 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729325 && myLocation.getLatitude() > 47.729126 && myLocation.getLongitude() < 7.310303 && myLocation.getLongitude() > 7.310032) {
+                        ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amicale");
+                        zone = 4 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729342 && myLocation.getLatitude() > 47.729001 && myLocation.getLongitude() < 7.310926 && myLocation.getLongitude() > 7.310405) {
+                        ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Salles TP physique");
+                        zone = 3 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                }
+                if(etage == 2) {
+                    if(myLocation.getLatitude() < 47.729807 && myLocation.getLatitude() > 47.729484 && myLocation.getLongitude() < 7.310883 && myLocation.getLongitude() > 7.310473) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Scolarité");
+                        zone = 1 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729604 && myLocation.getLatitude() > 47.729193 && myLocation.getLongitude() < 7.310689 && myLocation.getLongitude() > 7.310182) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Hall");
+                        zone = 2 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729604 && myLocation.getLatitude() > 47.729193 && myLocation.getLongitude() < 7.310926 && myLocation.getLongitude() > 7.310405) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Salles Informatiques");
+                        zone = 3 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729325 && myLocation.getLatitude() > 47.728861 && myLocation.getLongitude() < 7.310303 && myLocation.getLongitude() > 7.309834) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , E20 - E21");
+                        zone = 4 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729070 && myLocation.getLatitude() > 47.728739 && myLocation.getLongitude() < 7.310163 && myLocation.getLongitude() > 7.309694) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , E22 - E25");
+                        zone = 6 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729090 && myLocation.getLatitude() > 47.728866 && myLocation.getLongitude() < 7.310478 && myLocation.getLongitude() > 7.310163) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Bureaux Professeurs");
+                        zone = 5 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.728861 && myLocation.getLatitude() > 47.728628 && myLocation.getLongitude() < 7.310364 && myLocation.getLongitude() > 7.309942) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Bureaux Professeurs");
+                        zone = 7 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                }
+                if(etage == 3) {
+                    if(myLocation.getLatitude() < 47.729423 && myLocation.getLatitude() > 47.729270 && myLocation.getLongitude() < 7.310402 && myLocation.getLongitude() > 7.310185) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Hall");
+                        zone = 2 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729325 && myLocation.getLatitude() > 47.728861 && myLocation.getLongitude() < 7.310303 && myLocation.getLongitude() > 7.309834) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 3 , E30 - E32");
+                        zone = 4 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729070 && myLocation.getLatitude() > 47.728739 && myLocation.getLongitude() < 7.310163 && myLocation.getLongitude() > 7.309694) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 3 , E33 - E37");
+                        zone = 6 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.729090 && myLocation.getLatitude() > 47.728866 && myLocation.getLongitude() < 7.310478 && myLocation.getLongitude() > 7.310163) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
+                        zone = 5 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                    if(myLocation.getLatitude() < 47.728861 && myLocation.getLatitude() > 47.728628 && myLocation.getLongitude() < 7.310364 && myLocation.getLongitude() > 7.309942) {
+                        ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
+                        zone = 7 ;
+                        CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                        frag.setZone(zone);
+                    }
+                }
                 handler.postDelayed(this,500);
             }
         };
@@ -135,7 +283,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    @SuppressLint("MissingPermission")
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         findViewById(R.id.Etage1_layout).setVisibility(View.INVISIBLE);
@@ -155,20 +302,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.buildEnsisaLimit();
 
 
-
-
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else{
             if(!mMap.isMyLocationEnabled())
                 mMap.setMyLocationEnabled(true);
-
-            LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-            myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2, 2, new LocationListener() {
+            String provider = locationManager.getBestProvider(critere,true);
+            locationManager.requestLocationUpdates(provider, 1, 1, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    myLocation = location ;
+                    //myLocation = location ;
                     LatLng latlng = new LatLng(location.getLatitude(),location.getLongitude());
                     if(etage == 1) {
                         if(latlng.latitude < 47.729807 && latlng.latitude > 47.729484 && latlng.longitude < 7.310883 && latlng.longitude > 7.310473) {
