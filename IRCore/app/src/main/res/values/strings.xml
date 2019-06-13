@@ -1,4 +1,10 @@
 <resources>
+    //ressource de la page d'acceuil
+    <string name="bienvenue">Bienvenue sur IRCore</string>
+    <string name="contenu">Cette application vous permet de vous aider à vous orienter au sein de l ENSISA.</string>
+    <string name="click">Pour accéder à cela  cliquez sur le menu en haut a gauche pour selectionner l action à faire </string>
+
+    // ressource du menu
     <string name="app_name">IRCore</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
