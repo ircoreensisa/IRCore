@@ -40,15 +40,3 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:17.0.2'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
-
-
-sceneform.asset('sampledata/andy_dance.fbx',
-        'default',
-        'sampledata/andy_dance.sfa',
-        'src/main/assets/andy_dance',
-        ['sampledata/andy_dance.fbx'])
-
-sceneform.asset('sampledata/Cabin.obj',
-        'default',
-        'sampledata/Cabin.sfa',
-        'src/main/assets/Cabin')
