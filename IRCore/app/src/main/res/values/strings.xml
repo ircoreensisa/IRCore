@@ -18,6 +18,8 @@
     //Ressources du lecteur de texte
     <string name="txt_message">Recherche de texte...</string>
 
+    <string name="zone">%1$d</string>
+
     <string name="title_activity_maps">Map</string>
     <string-array name="salles_array">
         <item>Grand amphi</item>
