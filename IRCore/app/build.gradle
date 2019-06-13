@@ -38,6 +38,7 @@ dependencies {
     api 'me.dm7.barcodescanner:zxing:1.9'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-vision:17.0.2'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
 
 
