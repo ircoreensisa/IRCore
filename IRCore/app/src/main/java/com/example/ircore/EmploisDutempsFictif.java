@@ -13,14 +13,14 @@ public class EmploisDutempsFictif {
         this.currentSalleId = 1;
         this.currentProf = "\n  ";
         this.emploisDuTemps = new ArrayList<String>();
-        this.emploisDuTemps.add("\nLienhart ,Algo SD");
-        this.emploisDuTemps.add("\nPerronne , AOO");
-        this.emploisDuTemps.add("\nAmbs , ASLC");
-        this.emploisDuTemps.add("\nThiry , UML");
-        this.emploisDuTemps.add("\nWeber , Systeme d'exploitation ");
-        this.emploisDuTemps.add("\nDietrich , Techno Web");
-        this.emploisDuTemps.add("\nHilt , Réseaux");
-        this.emploisDuTemps.add("\nHassenforder , Unix ");
+        this.emploisDuTemps.add("\nDenis Lienhart ,Algo SD");
+        this.emploisDuTemps.add("\nJean-Marc Perronne , AOO");
+        this.emploisDuTemps.add("\nPierre Ambs , ASLC");
+        this.emploisDuTemps.add("\nLaurent Thiry , UML");
+        this.emploisDuTemps.add("\nJonathan Weber , Systeme d'exploitation ");
+        this.emploisDuTemps.add("\nJulien Dietrich , Techno Web");
+        this.emploisDuTemps.add("\nBenoit Hilt , Réseaux");
+        this.emploisDuTemps.add("\nMichel Hassenforder , Unix ");
         this.emploisDuTemps.add("\n  ");
 
 
