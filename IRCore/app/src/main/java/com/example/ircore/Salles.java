@@ -29,29 +29,30 @@ public class Salles {
         this.salles.add(new Salle(14, "PC4", 2,3,7.310527, 47.729301) );
         this.salles.add(new Salle(15, "PC Master", 2,3,7.310628, 47.729199) );
         this.salles.add(new Salle(16, "TP informatique industrielle", 2,3,7.310580, 47.729268) );
-        this.salles.add(new Salle(17, "E20 A", 2,4,7.310125, 47.729231) );
-        this.salles.add(new Salle(18, "E20 B", 2,4,7.310105,  47.729197) );
-        this.salles.add(new Salle(19, "E21", 2,4,7.310045, 47.729087) );
-        this.salles.add(new Salle(20, "E22", 2,6,7.309997,  47.729038) );
-        this.salles.add(new Salle(21, "E23", 2,6,7.309966, 47.728977) );
-        this.salles.add(new Salle(22, "E24", 2,6,7.309912,  47.728919) );
-        this.salles.add(new Salle(23, "E25", 2,6,7.309793, 47.728820) );
-        this.salles.add(new Salle(23, "Prof 1, Etage 2", 2,5,7.310381,  47.728955) );
-        this.salles.add(new Salle(23, "Prof 2, Etage 2", 2,5, 7.310142, 47.728758) );
+        this.salles.add(new Salle(17, "E 20A", 2,4,7.310125, 47.729231) );
+        this.salles.add(new Salle(18, "E 20B", 2,4,7.310105,  47.729197) );
+        this.salles.add(new Salle(19, "E 21", 2,4,7.310045, 47.729087) );
+        this.salles.add(new Salle(20, "E 22", 2,6,7.309997,  47.729038) );
+        this.salles.add(new Salle(21, "E 23", 2,6,7.309966, 47.728977) );
+        this.salles.add(new Salle(22, "E 24", 2,6,7.309912,  47.728919) );
+        this.salles.add(new Salle(23, "E 25", 2,6,7.309793, 47.728820) );
+        this.salles.add(new Salle(24, "Prof 1, Etage 2", 2,5,7.310381,  47.728955) );
+        this.salles.add(new Salle(25, "Prof 2, Etage 2", 2,7, 7.310142, 47.728758) );
+        this.salles.add(new Salle(26,"Scolarité",2,1,7.310713,47.729660));
 
 
         //3ème étage
-        this.salles.add(new Salle(24, "E30", 3,4,7.310140, 47.729227) );
-        this.salles.add(new Salle(25, "E31", 3,4,7.310096, 47.729195) );
-        this.salles.add(new Salle(26, "E32", 3,4,7.310029, 47.729114) );
-        this.salles.add(new Salle(27, "E33", 3,4,7.310002, 47.729091) );
-        this.salles.add(new Salle(28, "E34", 3,6,7.309967, 47.729006) );
-        this.salles.add(new Salle(29, "E35", 3,6,7.309909, 47.728943) );
-        this.salles.add(new Salle(30, "E36", 3,6,7.309873, 47.728918) );
-        this.salles.add(new Salle(31, "E37", 3,6,7.309848, 47.728884) );
-        this.salles.add(new Salle(32, "Salle Réseau",3, 7,7.310065, 47.728818) );
-        this.salles.add(new Salle(23, "Prof 1, Etage 3", 3,5,7.310381,  47.728955) );
-        this.salles.add(new Salle(23, "Prof 2, Etage 3", 3,5, 7.310142, 47.728758) );
+        this.salles.add(new Salle(27, "E 30", 3,4,7.310140, 47.729227) );
+        this.salles.add(new Salle(28, "E 31", 3,4,7.310096, 47.729195) );
+        this.salles.add(new Salle(29, "E 32", 3,4,7.310029, 47.729114) );
+        this.salles.add(new Salle(30, "E 33", 3,4,7.310002, 47.729091) );
+        this.salles.add(new Salle(31, "E 34", 3,6,7.309967, 47.729006) );
+        this.salles.add(new Salle(32, "E 35", 3,6,7.309909, 47.728943) );
+        this.salles.add(new Salle(33, "E 36", 3,6,7.309873, 47.728918) );
+        this.salles.add(new Salle(34, "E 37", 3,6,7.309848, 47.728884) );
+        this.salles.add(new Salle(35, "Salle Réseau",3, 7,7.310065, 47.728818) );
+        this.salles.add(new Salle(36, "Prof 1, Etage 3", 3,5,7.310381,  47.728955) );
+        this.salles.add(new Salle(37, "Prof 2, Etage 3", 3,7, 7.310142, 47.728758) );
 
 
 

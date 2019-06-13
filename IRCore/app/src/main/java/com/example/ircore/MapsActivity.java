@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,7 +49,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int etage_dest;
     private int zone_dest ;
     private int zone ;
+    private boolean climbing;
     private Salles salles;
+    private Handler handler;
+    private Runnable runnable;
 
 
 
@@ -95,6 +99,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if(etage == 1) {
+                    if(zone==1) ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amphis");
+                    if(zone==2) ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Hall");
+                    if(zone==4) ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amicale");
+                    if(zone==3) ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Salles TP physique");
+                }
+                if(etage == 2) {
+                    if(zone==1) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Scolarité");
+                    if(zone==2) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Hall");
+                    if(zone==3) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Salles Informatiques");
+                    if(zone==4) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , E20 - E21");
+                    if(zone==6) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , E22 - E25");
+                    if(zone==5) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Bureaux Professeurs");
+                    if(zone==7) ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Bureaux Professeurs");
+                }
+                if(etage == 3) {
+                    if(zone==2) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Hall");
+                    if(zone==4) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , E30 - E32");
+                    if(zone==6) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , E33 - E37");
+                    if(zone==5) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
+                    if(zone==7) ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
+                }
+                handler.postDelayed(this,500);
+            }
+        };
+
+        handler.postDelayed(runnable,500);
     }
 
 
@@ -114,7 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         View v = getSupportFragmentManager().findFragmentById(R.id.map).getView();
         v.setLayoutParams(new RelativeLayout.LayoutParams(smallWidth,smallHeight));
 
-        mMap.setMinZoomPreference(0);
+        mMap.setMinZoomPreference(17);
         mMap.setIndoorEnabled(true);
         this.buildEnsisaLimit();
 
@@ -132,7 +168,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2, 2, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
-                    Log.i("CurrentLocation", "Last Known Location :" + location.getLatitude() + "," + location.getLongitude());
                     myLocation = location ;
                     LatLng latlng = new LatLng(location.getLatitude(),location.getLongitude());
                     if(etage == 1) {
@@ -273,12 +308,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     findViewById(R.id.Etage2_layout).setVisibility(View.INVISIBLE);
                     findViewById(R.id.Etage3_layout).setVisibility(View.INVISIBLE);
                     findViewById(R.id.menu_sous).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.Currentlocation).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.Textguide).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.Location).setVisibility(View.INVISIBLE);
                     v.setLayoutParams(new RelativeLayout.LayoutParams(smallWidth,smallHeight));
                     v.setAlpha(0.5f);
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(47.729309,7.310529), 17), 1000, null);
                 }
                 else {
                     findViewById(R.id.menu_sous).setVisibility(View.VISIBLE);
+                    findViewById(R.id.Currentlocation).setVisibility(View.VISIBLE);
+                    findViewById(R.id.Textguide).setVisibility(View.VISIBLE);
+                    findViewById(R.id.Location).setVisibility(View.VISIBLE);
                     v.setLayoutParams(new RelativeLayout.LayoutParams(display.widthPixels,display.heightPixels));
                     v.setAlpha(0.7f);
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(47.729309,7.310529), 18), 1000, null);
@@ -619,6 +660,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(new LatLng(47.728943,7.309909)).title("E35"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(47.728918,7.309873)).title("E36"));
         mMap.addMarker(new MarkerOptions().position(new LatLng(47.728884,7.309848)).title("E37"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(47.728818,7.310065)).title("Salle Réseau"));
     }
 
     public void buildEtage1(View view){
@@ -626,7 +668,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         findViewById(R.id.Etage1_layout).setVisibility(View.VISIBLE);
         findViewById(R.id.Etage2_layout).setVisibility(View.INVISIBLE);
         findViewById(R.id.Etage3_layout).setVisibility(View.INVISIBLE);
-        etage = 1 ;
         this.buildEnsisaLimit();
     }
 
@@ -635,7 +676,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         findViewById(R.id.Etage1_layout).setVisibility(View.INVISIBLE);
         findViewById(R.id.Etage2_layout).setVisibility(View.VISIBLE);
         findViewById(R.id.Etage3_layout).setVisibility(View.INVISIBLE);
-        etage = 2 ;
         this.buildEnsisaLimit();
     }
 
@@ -644,8 +684,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         findViewById(R.id.Etage1_layout).setVisibility(View.INVISIBLE);
         findViewById(R.id.Etage2_layout).setVisibility(View.INVISIBLE);
         findViewById(R.id.Etage3_layout).setVisibility(View.VISIBLE);
-        etage = 3 ;
-        zone = 2 ;
         this.buildEnsisaLimit();
     }
 
@@ -654,12 +692,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void guide(int etage_dest, int zone){
-        if(etage_dest != etage) {
-            ((TextView)findViewById(R.id.Textguide)).setText("Aller à l'étage "+etage_dest+", appuyer ci-dessous et appuyer sur start");
+        if(etage_dest != etage && !climbing) {
+            mMap.clear();
+            this.buildEnsisaLimit();
+            ((TextView)findViewById(R.id.Textguide)).setText("Aller à l'étage "+etage_dest+", puis appuyer sur start");
             mMap.addMarker(new MarkerOptions().position(new LatLng(47.729260,7.310348)));
+            climbing = true ;
         } else {
+            climbing = false ;
             mMap.clear();
             etage = etage_dest ;
+            this.zone = 2 ;
             this.buildEnsisaLimit();
             ((TextView)findViewById(R.id.Textguide)).setText("Suivez les marqueurs");
             if(etage_dest == 1) this.guideE1(zone);
@@ -753,7 +796,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     this.buildZ4();
                 }
                 if(this.zone == 2) {
-                    this.buildZ2();
                     this.buildZ4();
                 }
                 break;
@@ -887,7 +929,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     this.buildZ3();
                 }
                 if(this.zone == 2) {
-                    this.buildZ2();
+                    this.buildZ3();
                 }
                 if(this.zone == 5) {
                     this.buildZ4();
