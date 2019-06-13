@@ -99,7 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         View v = getSupportFragmentManager().findFragmentById(R.id.map).getView();
         v.setAlpha(0.5f); // Change this value to set the desired alpha
 
-        etage = 1;
+        etage = 2;
         zone = 2;
         salles = new Salles();
 
