@@ -96,6 +96,7 @@ public class textReader extends AppCompatActivity {
                 @Override
                 public void surfaceDestroyed(SurfaceHolder holder) {
                     mCameraSource.stop();
+                    mTextView.setText("Recherche de texte...");
                 }
             });
 
@@ -139,11 +140,12 @@ public class textReader extends AppCompatActivity {
                                     if (texte.contains(salle)){
 
                                         StringBuilder salledetectee = new StringBuilder();
-                                        salledetectee.append("vous êtes devant la salle ");
+                                        salledetectee.append("Vous êtes devant la salle : ");
                                         salledetectee.append(salle);
 
                                         String cour = edt.getRandomclass(s.getId());
 
+                                        salledetectee.append("\nSalle occupée : ");
                                         salledetectee.append(cour);
                                         mTextView.setText(salledetectee);
                                     }
@@ -157,11 +159,5 @@ public class textReader extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    public void onClick(){
-        Intent intent=new Intent(this,MainActivity.class);
-        startActivity(intent);
-
     }
 }
