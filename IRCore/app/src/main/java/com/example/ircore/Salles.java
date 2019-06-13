@@ -36,22 +36,23 @@ public class Salles {
         this.salles.add(new Salle(21, "E23", 2,6,7.309966, 47.728977) );
         this.salles.add(new Salle(22, "E24", 2,6,7.309912,  47.728919) );
         this.salles.add(new Salle(23, "E25", 2,6,7.309793, 47.728820) );
-        this.salles.add(new Salle(23, "Prof 1, Etage 2", 2,5,7.310381,  47.728955) );
-        this.salles.add(new Salle(23, "Prof 2, Etage 2", 2,5, 7.310142, 47.728758) );
+        this.salles.add(new Salle(24, "Prof 1, Etage 2", 2,5,7.310381,  47.728955) );
+        this.salles.add(new Salle(25, "Prof 2, Etage 2", 2,7, 7.310142, 47.728758) );
+        this.salles.add(new Salle(26,"Scolarité",2,1,7.310713,47.729660));
 
 
         //3ème étage
-        this.salles.add(new Salle(24, "E30", 3,4,7.310140, 47.729227) );
-        this.salles.add(new Salle(25, "E31", 3,4,7.310096, 47.729195) );
-        this.salles.add(new Salle(26, "E32", 3,4,7.310029, 47.729114) );
-        this.salles.add(new Salle(27, "E33", 3,4,7.310002, 47.729091) );
-        this.salles.add(new Salle(28, "E34", 3,6,7.309967, 47.729006) );
-        this.salles.add(new Salle(29, "E35", 3,6,7.309909, 47.728943) );
-        this.salles.add(new Salle(30, "E36", 3,6,7.309873, 47.728918) );
-        this.salles.add(new Salle(31, "E37", 3,6,7.309848, 47.728884) );
-        this.salles.add(new Salle(32, "Salle Réseau",3, 7,7.310065, 47.728818) );
-        this.salles.add(new Salle(23, "Prof 1, Etage 3", 3,5,7.310381,  47.728955) );
-        this.salles.add(new Salle(23, "Prof 2, Etage 3", 3,5, 7.310142, 47.728758) );
+        this.salles.add(new Salle(27, "E30", 3,4,7.310140, 47.729227) );
+        this.salles.add(new Salle(28, "E31", 3,4,7.310096, 47.729195) );
+        this.salles.add(new Salle(29, "E32", 3,4,7.310029, 47.729114) );
+        this.salles.add(new Salle(30, "E33", 3,4,7.310002, 47.729091) );
+        this.salles.add(new Salle(31, "E34", 3,6,7.309967, 47.729006) );
+        this.salles.add(new Salle(32, "E35", 3,6,7.309909, 47.728943) );
+        this.salles.add(new Salle(33, "E36", 3,6,7.309873, 47.728918) );
+        this.salles.add(new Salle(34, "E37", 3,6,7.309848, 47.728884) );
+        this.salles.add(new Salle(35, "Salle Réseau",3, 7,7.310065, 47.728818) );
+        this.salles.add(new Salle(36, "Prof 1, Etage 3", 3,5,7.310381,  47.728955) );
+        this.salles.add(new Salle(37, "Prof 2, Etage 3", 3,7, 7.310142, 47.728758) );
 
 
 
