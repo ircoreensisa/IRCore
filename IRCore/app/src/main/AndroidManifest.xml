@@ -34,7 +34,6 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
         <meta-data android:name="com.google.ar.core" android:value="required" />
         <meta-data
             android:name="com.google.android.ar.API_KEY"
@@ -42,6 +41,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC1MO5B_9sCUpVgLswib-Js0JDjiU19jjc" />
+        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
     </application>
 
 </manifest>

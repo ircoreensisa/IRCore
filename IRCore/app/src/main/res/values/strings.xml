@@ -16,7 +16,7 @@
     <string name="menu_quit">Quitter</string>
 
     //Ressources du lecteur de texte
-    <string name="txt_message">Texte</string>
+    <string name="txt_message">Recherche de texte...</string>
 
     <string name="title_activity_maps">Map</string>
     <string-array name="salles_array">
@@ -37,23 +37,23 @@
         <item>PC Master</item>
         <item>TP informatique industrielle</item>
         <item>Scolarité</item>
-        <item>E20 A</item>
-        <item>E20 B</item>
-        <item>E21</item>
-        <item>E22</item>
-        <item>E23</item>
-        <item>E24</item>
-        <item>E25</item>
+        <item>E 20A</item>
+        <item>E 20B</item>
+        <item>E 21</item>
+        <item>E 22</item>
+        <item>E 23</item>
+        <item>E 24</item>
+        <item>E 25</item>
         <item>Prof 1, Etage 2</item>
         <item>Prof 2, Etage 2</item>
-        <item>E30</item>
-        <item>E31</item>
-        <item>E32</item>
-        <item>E33</item>
-        <item>E34</item>
-        <item>E35</item>
-        <item>E36</item>
-        <item>E37</item>
+        <item>E 30</item>
+        <item>E 31</item>
+        <item>E 32</item>
+        <item>E 33</item>
+        <item>E 34</item>
+        <item>E 35</item>
+        <item>E 36</item>
+        <item>E 37</item>
         <item>Salle Réseau</item>
         <item>Prof 1, Etage 3</item>
         <item>Prof 2, Etage 3</item>
