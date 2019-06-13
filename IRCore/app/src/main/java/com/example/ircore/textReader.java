@@ -40,16 +40,14 @@ public class textReader extends AppCompatActivity {
         Intent intent =getIntent();
         if(intent!=null){
             this.startCameraSource();
-
         }
     }
 
     private void startCameraSource() {
 
 
-
         //Create the TextRecognizer
-        final TextRecognizer textRecognizer = new TextRecognizer.Builder(getApplicationContext()).build();
+        final TextRecognizer textRecognizer = new TextRecognizer.Builder(this).build();
         final TextView mTextView= (TextView)findViewById(R.id.txt_view);
         final SurfaceView mCameraView= (SurfaceView)findViewById(R.id.surfaceView);
 
