@@ -32,6 +32,19 @@ public final class SnackbarHelper {
   private int maxLines = 2;
   private String lastMessage = "";
 
+    public void hide(Activity activity) {
+        activity.runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (messageSnackbar != null) {
+                            messageSnackbar.dismiss();
+                        }
+                        messageSnackbar = null;
+                    }
+                });
+    }
+
   /** Shows a snackbar with a given message. */
   public void showMessage(Activity activity, String message) {
     if (!message.isEmpty() && (messageSnackbar == null || !lastMessage.equals(message))) {

@@ -1,0 +1,75 @@
+{
+  animations: [
+    {
+      path: 'sampledata/5.fbx',
+    },
+  ],
+  materials: [
+    {
+      name: 'Material_113',
+      parameters: [
+        {
+          baseColor: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          baseColorMap: '2210',
+        },
+        {
+          normalMap: null,
+        },
+        {
+          interpolatedColor: null,
+        },
+        {
+          metallic: 0,
+        },
+        {
+          metallicMap: null,
+        },
+        {
+          roughness: 1,
+        },
+        {
+          roughnessMap: null,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/fbx_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'Color',
+      'TexCoord',
+      'Orientation',
+      'BoneIndices',
+      'BoneWeights',
+    ],
+    collision: {},
+    file: 'sampledata/5.fbx',
+    name: '5',
+    recenter: 'root',
+    scale: 5000,
+  },
+  samplers: [
+    {
+      file: 'sampledata/5.fbm/2210.png',
+      name: '2210',
+      pipeline_name: '5.fbm/2210.png',
+    },
+    {
+      file: 'sampledata/5.fbm/2214.png',
+      name: '2214',
+      pipeline_name: '5.fbm/2214.png',
+    },
+  ],
+  version: '0.54:2',
+}

@@ -37,7 +37,7 @@
     file: 'sampledata/Cabin.obj',
     name: 'Cabin',
     recenter: 'root',
-    scale: 0.0013029999999999999,
+    scale: 0.0009,
   },
   version: '0.54:2',
 }

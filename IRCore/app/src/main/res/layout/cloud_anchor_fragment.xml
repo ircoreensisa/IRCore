@@ -67,18 +67,32 @@
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 
-  <androidx.constraintlayout.widget.ConstraintLayout
+  <androidx.appcompat.widget.LinearLayoutCompat
       android:id="@+id/gallery_layout"
-      android:layout_width="333dp"
-      android:layout_height="77dp"
-      android:layout_marginStart="8dp"
-      android:layout_marginEnd="8dp"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:orientation="horizontal"
       app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/ar_container">
+      app:layout_constraintTop_toBottomOf="@+id/ar_container"
+      app:layout_constraintVertical_chainStyle="spread"
+      app:layout_constraintVertical_weight="1"/>
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+      android:id="@+id/fab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:layout_marginEnd="8dp"
+      android:layout_marginBottom="8dp"
+      android:clickable="true"
+      app:layout_constraintBottom_toBottomOf="@+id/gallery_layout"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.89"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/ar_container"
+      app:layout_constraintVertical_bias="0.971"
+      app:srcCompat="@android:drawable/ic_menu_camera" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

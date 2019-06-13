@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.ircore.MapsActivity;
@@ -45,10 +46,12 @@ import com.google.ar.core.Session;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.rendering.AnimationData;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
+import com.google.ar.sceneform.animation.ModelAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,9 +118,11 @@ public class CloudAnchorFragment extends ArFragment {
 
 
   public  void setZone(int zone){
-    this.zone=zone;
-    this.chooseAnchorModel();
-    this.onResolveButtonPressed();
+    if (this.zone!=zone){
+      this.zone=zone;
+      this.chooseAnchorModel(zone);
+      this.onResolveButtonPressed();
+    }
   }
 
   //code pour ajouter les anchors
@@ -134,6 +139,14 @@ public class CloudAnchorFragment extends ArFragment {
         snackbarHelper.showMessage(
                 getActivity(),
                 "Pas de ID dans la liste");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                  @Override
+                  public void run() {
+                    snackbarHelper.hide(getActivity());
+                  }
+                },3000
+        );
         return;
       }
       //resolveButton.setEnabled(false);
@@ -159,6 +172,14 @@ public class CloudAnchorFragment extends ArFragment {
     CloudAnchorState cloudState = anchor.getCloudAnchorState();
     if (cloudState == CloudAnchorState.SUCCESS) {
       snackbarHelper.showMessage(getActivity(), "Cloud Ancrage Resolved. Le lieu était :"+this.zone);
+      new java.util.Timer().schedule(
+              new java.util.TimerTask() {
+                @Override
+                public void run() {
+                  snackbarHelper.hide(getActivity());
+                }
+              },3000
+      );
       setNewAnchor(anchor);
     }
 
@@ -171,6 +192,14 @@ public class CloudAnchorFragment extends ArFragment {
 
               + ". Error: "
               + cloudState.toString());
+      new java.util.Timer().schedule(
+              new java.util.TimerTask() {
+                @Override
+                public void run() {
+                  snackbarHelper.hide(getActivity());
+                }
+              },3000
+      );
       resolveButton.setEnabled(true);
     }
   }
@@ -196,8 +225,24 @@ public class CloudAnchorFragment extends ArFragment {
 
       snackbarHelper.showMessage(getActivity(), "New Ancrage Hosted dans la zone :"+this.zone);
       setNewAnchor(anchor);
+      new java.util.Timer().schedule(
+              new java.util.TimerTask() {
+                @Override
+                public void run() {
+                  snackbarHelper.hide(getActivity());
+                }
+              },3000
+      );
     } else {
       snackbarHelper.showMessage(getActivity(), "Error while hosting: " + this.zone);
+      new java.util.Timer().schedule(
+              new java.util.TimerTask() {
+                @Override
+                public void run() {
+                  snackbarHelper.hide(getActivity());
+                }
+              },3000
+      );
     }
   }
 
@@ -254,13 +299,31 @@ public class CloudAnchorFragment extends ArFragment {
     return config;
   }
 
-  private void chooseAnchorModel(){
-    switch (this.zone){
+  private void chooseAnchorModel(int zone){
+    switch (zone){
       case 0:{
-        setAnchorModel(R.raw.andy);
+        setAnchorModel("andy_dance.sfb");
       }
       case 1:{
-        setAnchorModel(1);
+        setAnchorModel("1.sfb");
+      }
+      case 2:{
+        setAnchorModel("2.sfb");
+      }
+      case 3:{
+        setAnchorModel("3.sfb");
+      }
+      case 4:{
+        setAnchorModel("4.sfb");
+      }
+      case 5:{
+        setAnchorModel("5.sfb");
+      }
+      case 6:{
+        setAnchorModel("6.sfb");
+      }
+      case 7:{
+        setAnchorModel("7.sfb");
       }
 
 
@@ -269,15 +332,15 @@ public class CloudAnchorFragment extends ArFragment {
 
   }
 
-  private void setAnchorModel(int id){
+  private void setAnchorModel(String str){
     ModelRenderable.builder()
-            .setSource(this.getContext(),id)
+            .setSource(this.getContext(),Uri.parse(str))
             .build()
             .thenAccept(renderable -> andyRenderable = renderable);
   }
 
   private void initializeGallery(View rootview) {
-    ConstraintLayout gallery = rootview.findViewById(R.id.gallery_layout);
+    LinearLayoutCompat gallery = rootview.findViewById(R.id.gallery_layout);
 
     ImageView andy = new ImageView(this.getContext());
     andy.setImageResource(R.drawable.droid_thumb);
@@ -286,7 +349,7 @@ public class CloudAnchorFragment extends ArFragment {
       ModelRenderable.builder()
               .setSource(this.getContext(), Uri.parse("andy_dance.sfb"))
               .build()
-              .thenAccept(renderable -> andyRenderable = renderable);
+              .thenAccept(renderable -> {andyRenderable = renderable; startAnimation(andyRenderable);});
       Log.i("test","andy");
 
     });
@@ -305,5 +368,28 @@ public class CloudAnchorFragment extends ArFragment {
     });
     gallery.addView(cabin);
 
+    ImageView trex = new ImageView(this.getContext());
+    trex.setImageResource(R.drawable.cabin_thumb);
+    trex.setContentDescription("T-rex");
+    trex.setOnClickListener(view -> {
+      ModelRenderable.builder()
+              .setSource(this.getContext(), Uri.parse("T-Rex Model.sfb"))
+              .build()
+              .thenAccept(renderable -> andyRenderable = renderable);
+
+    });
+    gallery.addView(trex);
+
+  }
+
+  public void startAnimation(ModelRenderable renderable){
+    if(renderable==null || renderable.getAnimationDataCount() == 0) {
+      return;
+    }
+    for(int i = 0;i < renderable.getAnimationDataCount();i++){
+      AnimationData animationData = renderable.getAnimationData(i);
+    }
+    ModelAnimator animator = new ModelAnimator(renderable.getAnimationData(0), renderable);
+    animator.start();
   }
 }
