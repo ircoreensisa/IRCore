@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,8 +25,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.ircore.cloudanchor.CloudAnchorFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,6 +53,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Salles salles;
     private Handler handler;
     private Runnable runnable;
+
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +133,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         handler.postDelayed(runnable,500);
     }
 
+
+
     @SuppressLint("MissingPermission")
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -147,6 +154,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setIndoorEnabled(true);
         this.buildEnsisaLimit();
 
+
+
+
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }else{
@@ -164,70 +174,102 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if(latlng.latitude < 47.729807 && latlng.latitude > 47.729484 && latlng.longitude < 7.310883 && latlng.longitude > 7.310473) {
                             ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amphis");
                             zone = 1 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729604 && latlng.latitude > 47.729193 && latlng.longitude < 7.310689 && latlng.longitude > 7.310182) {
                             ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Hall");
                             zone = 2 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729325 && latlng.latitude > 47.729126 && latlng.longitude < 7.310303 && latlng.longitude > 7.310032) {
                             ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Amicale");
                             zone = 4 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729342 && latlng.latitude > 47.729001 && latlng.longitude < 7.310926 && latlng.longitude > 7.310405) {
                             ((TextView)findViewById(R.id.Location)).setText("Rez de chaussée , Salles TP physique");
                             zone = 3 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                     }
                     if(etage == 2) {
                         if(latlng.latitude < 47.729807 && latlng.latitude > 47.729484 && latlng.longitude < 7.310883 && latlng.longitude > 7.310473) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Scolarité");
                             zone = 1 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729604 && latlng.latitude > 47.729193 && latlng.longitude < 7.310689 && latlng.longitude > 7.310182) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Hall");
                             zone = 2 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729604 && latlng.latitude > 47.729193 && latlng.longitude < 7.310926 && latlng.longitude > 7.310405) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Salles Informatiques");
                             zone = 3 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729325 && latlng.latitude > 47.728861 && latlng.longitude < 7.310303 && latlng.longitude > 7.309834) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , E20 - E21");
                             zone = 4 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729070 && latlng.latitude > 47.728739 && latlng.longitude < 7.310163 && latlng.longitude > 7.309694) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , E22 - E25");
                             zone = 6 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729090 && latlng.latitude > 47.728866 && latlng.longitude < 7.310478 && latlng.longitude > 7.310163) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Bureaux Professeurs");
                             zone = 5 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.728861 && latlng.latitude > 47.728628 && latlng.longitude < 7.310364 && latlng.longitude > 7.309942) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 2 , Bureaux Professeurs");
                             zone = 7 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                     }
                     if(etage == 3) {
                         if(latlng.latitude < 47.729423 && latlng.latitude > 47.729270 && latlng.longitude < 7.310402 && latlng.longitude > 7.310185) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Hall");
                             zone = 2 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729325 && latlng.latitude > 47.728861 && latlng.longitude < 7.310303 && latlng.longitude > 7.309834) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 3 , E30 - E32");
                             zone = 4 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729070 && latlng.latitude > 47.728739 && latlng.longitude < 7.310163 && latlng.longitude > 7.309694) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 3 , E33 - E37");
                             zone = 6 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.729090 && latlng.latitude > 47.728866 && latlng.longitude < 7.310478 && latlng.longitude > 7.310163) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
                             zone = 5 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                         if(latlng.latitude < 47.728861 && latlng.latitude > 47.728628 && latlng.longitude < 7.310364 && latlng.longitude > 7.309942) {
                             ((TextView)findViewById(R.id.Location)).setText("Etage 3 , Bureaux Professeurs");
                             zone = 7 ;
+                            CloudAnchorFragment frag = (CloudAnchorFragment) getSupportFragmentManager().findFragmentById(R.id.fragment2);
+                            frag.setZone(zone);
                         }
                     }
                 }

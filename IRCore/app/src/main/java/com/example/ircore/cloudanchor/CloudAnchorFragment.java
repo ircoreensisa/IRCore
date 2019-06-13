@@ -32,6 +32,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.ircore.MapsActivity;
 import com.example.ircore.R;
 import com.example.ircore.cloudanchor.helpers.CloudAnchorManager;
 import com.example.ircore.cloudanchor.helpers.SnackbarHelper;
@@ -70,7 +71,7 @@ public class CloudAnchorFragment extends ArFragment {
   private final CloudAnchorManager cloudAnchorManager = new CloudAnchorManager();
   private final SnackbarHelper snackbarHelper = new SnackbarHelper();
 
-  private int place;
+  private int zone;
 
   @Override
   @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
@@ -108,10 +109,16 @@ public class CloudAnchorFragment extends ArFragment {
     arScene.addOnUpdateListener(frameTime -> cloudAnchorManager.onUpdate());
     setOnTapArPlaneListener((hitResult, plane, motionEvent) -> onArPlaneTap(hitResult));
     return rootView;
+
+
   }
 
 
-
+  public  void setZone(int zone){
+    this.zone=zone;
+    this.chooseAnchorModel();
+    this.onResolveButtonPressed();
+  }
 
   //code pour ajouter les anchors
 
@@ -120,7 +127,7 @@ public class CloudAnchorFragment extends ArFragment {
         //ResolveDialogFragment.createWithOkListener(this::onShortCodeEntered);
     //dialog.show(getFragmentManager(), "Resolve");
     //onShortCodeEntered();
-    List<Ancrage> liste = dataBaseManager.readAnchors(2);
+    List<Ancrage> liste = dataBaseManager.readAnchors(this.zone);
     for (Ancrage ancrage : liste){
       String cloudAnchorId = ancrage.getIdAnchor();
       if (cloudAnchorId == null || cloudAnchorId.isEmpty()) {
@@ -151,7 +158,7 @@ public class CloudAnchorFragment extends ArFragment {
   private synchronized void onResolvedAnchorAvailable(com.google.ar.core.Anchor anchor) {
     CloudAnchorState cloudState = anchor.getCloudAnchorState();
     if (cloudState == CloudAnchorState.SUCCESS) {
-      snackbarHelper.showMessage(getActivity(), "Cloud Ancrage Resolved. Son ID était :"+people.get(0) );
+      snackbarHelper.showMessage(getActivity(), "Cloud Ancrage Resolved. Le lieu était :"+this.zone);
       setNewAnchor(anchor);
     }
 
@@ -176,7 +183,7 @@ public class CloudAnchorFragment extends ArFragment {
   private synchronized void onArPlaneTap(HitResult hitResult) {
     Anchor anchor = hitResult.createAnchor();
     setNewAnchor(anchor);
-    snackbarHelper.showMessage(getActivity(), "Now hosting anchor...");
+    snackbarHelper.showMessage(getActivity(), "Now hosting anchor..."+this.zone);
     cloudAnchorManager.hostCloudAnchor(
         getArSceneView().getSession(), anchor, this::onHostedAnchorAvailable);
   }
@@ -185,12 +192,12 @@ public class CloudAnchorFragment extends ArFragment {
     CloudAnchorState cloudState = anchor.getCloudAnchorState();
     if (cloudState == CloudAnchorState.SUCCESS) {
       people.add(anchor.getCloudAnchorId());
-      dataBaseManager.insertAnchor(anchor.getCloudAnchorId(),2);
+      dataBaseManager.insertAnchor(anchor.getCloudAnchorId(),this.zone);
 
-      snackbarHelper.showMessage(getActivity(), "New Ancrage Hosted");
+      snackbarHelper.showMessage(getActivity(), "New Ancrage Hosted dans la zone :"+this.zone);
       setNewAnchor(anchor);
     } else {
-      snackbarHelper.showMessage(getActivity(), "Error while hosting: " + cloudState.toString());
+      snackbarHelper.showMessage(getActivity(), "Error while hosting: " + this.zone);
     }
   }
 
@@ -245,6 +252,28 @@ public class CloudAnchorFragment extends ArFragment {
     Config config = super.getSessionConfiguration(session);
     config.setCloudAnchorMode(CloudAnchorMode.ENABLED);
     return config;
+  }
+
+  private void chooseAnchorModel(){
+    switch (this.zone){
+      case 0:{
+        setAnchorModel(R.raw.andy);
+      }
+      case 1:{
+        setAnchorModel(1);
+      }
+
+
+    }
+
+
+  }
+
+  private void setAnchorModel(int id){
+    ModelRenderable.builder()
+            .setSource(this.getContext(),id)
+            .build()
+            .thenAccept(renderable -> andyRenderable = renderable);
   }
 
   private void initializeGallery(View rootview) {
