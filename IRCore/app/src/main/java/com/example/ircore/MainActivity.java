@@ -91,8 +91,6 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_guidage) {
-
-        } else if (id == R.id.nav_visite) {
             Log.i("test","youpi");
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);

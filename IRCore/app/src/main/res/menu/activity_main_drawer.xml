@@ -23,11 +23,6 @@
             android:title="@string/menu_guidage" />
 
         <item
-            android:id="@+id/nav_visite"
-            android:icon="@drawable/objet"
-            android:title="@string/menu_visite" />
-
-        <item
             android:id="@+id/nav_quit"
             android:icon="@drawable/quitter"
             android:title="@string/menu_quit" />

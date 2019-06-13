@@ -19,10 +19,16 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/dest"
         android:layout_alignParentLeft="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        map:layout_constraintTop_toTopOf="@+id/dest"
         tools:context=".MapsActivity" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/dest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -58,11 +64,21 @@
             android:id="@+id/SelectDest"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="7dp"
+            android:text="Selectionner"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/selectDest"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="25dp"
             android:text="Destination :"
-            app:layout_constraintEnd_toStartOf="@+id/spinner"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,6 +90,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Etage 1 , Hall"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/Textguide" />
 
@@ -84,6 +101,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Pas de destination..."
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/start" />
 
@@ -94,6 +112,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:text="Vous êtes à :"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/Location"
             app:layout_constraintTop_toBottomOf="@+id/Textguide" />
